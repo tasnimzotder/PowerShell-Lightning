@@ -1,32 +1,42 @@
 # add this function to profile.ps1 located in ...\\Documents\\PowerShell
 
 
-function makk {
+function Run_AnyCode {
     param(
         [Parameter(Mandatory = $true)]
         [string]$value
     )
 
+    if (Test-Path $value -PathType Leaf) {
+        if ($value -like "*.cpp") {
+            $value = Split-Path $value -LeafBase
 
-    if (($value -like "*.cpp") -or (Test-Path "$value.cpp" -PathType Leaf)) {
-        $value = Split-Path $value -LeafBase
-        $build_cmd = "& g++ $value.cpp -o $value"
-    }
-    elseif (($value -like "*.py") -or (Test-Path "$value.py" -PathType Leaf)) {
-        $value = Split-Path $value -LeafBase
-        $build_cmd = "& python $value.py"
-    }
-    elseif (($value -like "*.js") -or (Test-Path "$value.js" -PathType Leaf)) {
-        $value = Split-Path $value -LeafBase
-        $build_cmd = "& node $value.js"
-    }
-    elseif (($value -like "*.ts") -or (Test-Path "$value.ts" -PathType Leaf)) {
-        $value = Split-Path $value -LeafBase
-        $build_cmd = "& ts-node $value.ts"
-    }
-    elseif (($value -like "*.cs") -or (Test-Path "$value.cs" -PathType Leaf)) {
-        $value = Split-Path $value -LeafBase
-        $build_cmd = "& csc $value.cs"
+            $build_cmd = "& g++ $value.cpp -o $value"
+            $run_cmd = $null
+        }
+        elseif ($value -like "*.py") {
+            $value = Split-Path $value -LeafBase
+            
+            $build_cmd = $null
+            $run_cmd = "& python $value.py"
+        }
+        elseif ($value -like "*.js") {
+            $value = Split-Path $value -LeafBase
+            $build_cmd = $null
+            $run_cmd = "& node $value.js"
+        }
+        elseif ($value -like "*.ts") {
+            $value = Split-Path $value -LeafBase
+            
+            $build_cmd = "& tsc $value.ts"
+            $run_cmd = "& node $value.js"
+        }
+        elseif ($value -like "*.cs") {
+            $value = Split-Path $value -LeafBase
+
+            $build_cmd = "& csc $value.cs"
+            $run_cmd = $null
+        }
     }
     else {
         Write-Host "`n    😟 No file found!`n"
@@ -44,15 +54,24 @@ function makk {
 
     $stopwatch_b = New-Object System.Diagnostics.Stopwatch
     $stopwatch_r = New-Object System.Diagnostics.Stopwatch
+
     $stopwatch_b.Start()
-
-    # Invoke-Expression "& g++ $value.cpp -o $value"
-    Invoke-Expression $build_cmd
-
+    
+    if ($null -ne $build_cmd) {
+        Write-Progress "Building... ⌛"
+        Invoke-Expression $build_cmd
+    }
+    
     $stopwatch_b.Stop()
     $stopwatch_r.Start()
     
-    if (Test-Path "$value.exe" -PathType Leaf) {
+    if ($null -ne $run_cmd) {
+        Write-Progress "Running... ⚡"
+        Invoke-Expression $run_cmd
+    }
+    elseif (Test-Path "$value.exe" -PathType Leaf) {
+        Write-Progress "Starting to run... ⚡"
+        Start-Sleep -Milliseconds 100
         Invoke-Expression "& .\$value.exe"
         Remove-Item "$value.exe"
     }
@@ -65,3 +84,6 @@ function makk {
     Write-Host "`n⌛ Build time $time_b_diff milliseconds"
     Write-Host "⚡ Run time   $time_r_diff milliseconds`n"
 }
+
+Set-Alias -Name makk -Value Run_AnyCode
+Set-Alias -Name rac -Value Run_AnyCode
