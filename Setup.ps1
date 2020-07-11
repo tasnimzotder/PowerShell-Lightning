@@ -1,7 +1,7 @@
 Write-Progress "Stating to copy files 😀"
 Start-Sleep -Milliseconds 500
 
-$target_folder = "C:\\Users\\$env:USERNAME\\OneDrive\\Documents\\PowerShell\\Modules"
+$target_folder = "C:\\Users\\$env:USERNAME\\Documents\\PowerShell\\Modules"
 
 if ((Test-Path -Path $target_folder) -ne $true) {
     mkdir $target_folder
