@@ -2,6 +2,16 @@
 
 # Prerequisites
 
+## Check for the execution policy
+
+Open PowerShell as Adminstrator
+
+- Run `Get-ExecutionPolicy`
+
+- If you don't get `RemoteSigned`. Then run `Set-ExecutionPolicy RemoteSigned`
+
+## Terminal Check
+
 You should use Windows Terminal to have a brilliant terminal experience on Windows.
 
 Windows Terminal can be acquired from the Microsoft Store, the [Windows Terminal](https://aka.ms/terminal)
@@ -18,12 +28,16 @@ Download the source file and extract
 
 You can download from the [Releases](https://github.com/tasnimzotder/PowerShell-Lightning/releases)
 
-To install - run `Setup.ps1` or `Setup.exe`
+- To install - run `Setup.ps1` or `Setup.exe`
 
-Open `profile.ps1` located in `\\Documents\PowerShell`
+## Optional
+
+> - Open `profile.ps1` located in `\\Documents\PowerShell`
 or simple run the command `code $PROFILE.CurrentUserAllHosts` or `notepad $PROFILE.CurrentUserAllHosts`
 
-add `Import-Module PowerShell-Lightning` to the end
+> - add `Import-Module PowerShell-Lightning` to the end
+
+Run `Get-Module` . You will see `PowerShell-Lightning` there.
 
 restart the PowerShell
 
