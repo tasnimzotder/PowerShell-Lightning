@@ -1,6 +1,3 @@
-# add this function to profile.ps1 located in ...\\Documents\\PowerShell
-
-
 function Run_AnyCode {
     param(
         [Parameter(Mandatory = $true)]
@@ -86,4 +83,3 @@ function Run_AnyCode {
 }
 
 Set-Alias -Name makk -Value Run_AnyCode
-Set-Alias -Name rac -Value Run_AnyCode
