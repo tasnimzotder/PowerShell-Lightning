@@ -1,4 +1,4 @@
-# Powershell-Scripts
+# Powershell-Lightning ⚡
 
 # Prerequisites
 
@@ -9,7 +9,33 @@ Windows Terminal can be acquired from the Microsoft Store, the [Windows Terminal
 You need to have the new PowerShell, can be downloaded from [here](https://github.com/PowerShell/PowerShell/releases/tag/v7.0.2)
 
 
-Go to [Releases](https://github.com/tasnimzotder/PS_Scripts-Moonlight/releases) and download from the Assets
+Go to [Releases](https://github.com/tasnimzotder/PowerShell-Lightning/releases) and download from the Assets
+
+
+# Installation
+
+Download the source file and extract
+
+You can download from the [Releases](https://github.com/tasnimzotder/PowerShell-Lightning/releases)
+
+To install - run `Setup.ps1` or `Setup.exe`
+
+Open `profile.ps1` located in `\\Documents\PowerShell`
+or simple run the command `code $PROFILE.CurrentUserAllHosts` or `notepad $PROFILE.CurrentUserAllHosts`
+
+add `Import-Module PowerShell-Lightning` to the end
+
+restart the PowerShell
+
+# Functions
+
+| Name          | Alias   | Description                                    |
+| --------------| ------- | ---------------------------------------------- |
+| `Run_AnyCode` | `makk`  | To run any code eg `makk hello.cpp`            |
+| `touch`       | `touch` | Create new file eg `touch hello.txt`           |
+| `nano`        | `nano`  | edit files eg `nano hello.txt`                 |
+| `rnn`         | `rnn`   | Rename eg `rnn hello.txt` then   `changed.txt` |
+
 
 # About PowerShell Profile
 
@@ -31,28 +57,3 @@ Go to [Releases](https://github.com/tasnimzotder/PS_Scripts-Moonlight/releases) 
 | Current User, All Host     | $Home\[My ]Documents\PowerShell\Profile.ps1                      |
 | Current User, Current Host | $Home\[My ]Documents\PowerShell\Microsoft.PowerShell_profile.ps1 |
 
-
-
-# Installation
-
-Download the source file and extract
-
-You can download from the [Releases](https://github.com/tasnimzotder/PS_Scripts-Moonlight/releases)
-
-To install - run `Setup.ps1` or `Setup.exe`
-
-Open `profile.ps1` located in `\\Documents\PowerShell`
-or simple run the command `code $PROFILE.CurrentUserAllHosts` or `notepad $PROFILE.CurrentUserAllHosts`
-
-add `Import-Module PS_Scripts-Moonlight` to the end
-
-restart the PowerShell
-
-# Functions
-
-| Name          | Alias   | Description                                    |
-| --------------| ------- | ---------------------------------------------- |
-| `Run_AnyCode` | `makk`  | To run any code eg `makk hello.cpp`            |
-| `touch`       | `touch` | Create new file eg `touch hello.txt`           |
-| `nano`        | `nano`  | edit files eg `nano hello.txt`                 |
-| `rnn`         | `rnn`   | Rename eg `rnn hello.txt` then   `changed.txt` |
