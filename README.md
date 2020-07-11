@@ -4,7 +4,7 @@
 
 ## Check for the execution policy
 
-Open PowerShell as Adminstrator
+Open PowerShell as Administrator
 
 - Run `Get-ExecutionPolicy`
 
