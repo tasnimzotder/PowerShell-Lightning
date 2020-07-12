@@ -63,11 +63,11 @@ function Run_AnyCode {
     $stopwatch_r.Start()
     
     if ($null -ne $run_cmd) {
-        Write-Progress "Running... ⚡"
+        Write-Progress -Activity "Running... ⚡" -Status "Please wait"
         Invoke-Expression $run_cmd
     }
     elseif (Test-Path "$value.exe" -PathType Leaf) {
-        Write-Progress "Starting to run... ⚡"
+        Write-Progress -Activity "Starting to run... ⚡" -Status "Please wait"
         Start-Sleep -Milliseconds 100
         Invoke-Expression "& .\$value.exe"
         Remove-Item "$value.exe"

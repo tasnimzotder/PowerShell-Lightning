@@ -12,7 +12,7 @@
     RootModule        = 'PowerShell-Lightning.psm1'
 
     # Version number of this module.
-    ModuleVersion     = '0.1'
+    ModuleVersion     = '0.1.0'
 
     # Supported PSEditions
     # CompatiblePSEditions = @()
@@ -30,7 +30,7 @@
     Copyright         = '(c) Tasnim Zotder. All rights reserved.'
 
     # Description of the functionality provided by this module
-    # Description = ''
+    Description = 'PowerShell scripts'
 
     # Minimum version of the PowerShell engine required by this module
     # PowerShellVersion = ''
@@ -114,7 +114,7 @@
             # ReleaseNotes = ''
 
             # Prerelease string of this module
-            # Prerelease = ''
+            Prerelease = 'beta4'
 
             # Flag to indicate whether the module requires explicit user acceptance for install/update/save
             # RequireLicenseAcceptance = $false

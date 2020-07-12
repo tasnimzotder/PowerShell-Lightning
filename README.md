@@ -1,4 +1,18 @@
 # Powershell-Lightning ⚡
+![PowerShell Gallery Version (including pre-releases)](https://img.shields.io/powershellgallery/v/PowerShell-Lightning?include_prereleases)
+.
+![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/tasnimzotder/PowerShell-Lightning?include_prereleases)
+.
+![GitHub issues](https://img.shields.io/github/issues/tasnimzotder/PowerShell-Lightning)
+.
+![PowerShell Gallery](https://img.shields.io/powershellgallery/dt/PowerShell-Lightning?label=downloads%20-%20ps%20gallery)
+.
+![GitHub All Releases](https://img.shields.io/github/downloads/tasnimzotder/PowerShell-Lightning/total?label=downloads%20-%20github)
+.
+
+
+
+
 
 # Prerequisites
 
@@ -19,10 +33,17 @@ Windows Terminal can be acquired from the Microsoft Store, the [Windows Terminal
 You need to have the new PowerShell, can be downloaded from [here](https://github.com/PowerShell/PowerShell/releases/tag/v7.0.2)
 
 
-Go to [Releases](https://github.com/tasnimzotder/PowerShell-Lightning/releases) and download from the Assets
-
-
 # Installation
+
+## One Line Command (Method 1)
+
+```PowerShell
+Install-Module -Name PowerShell-Lightning
+```
+
+## Manual (Method 2)
+
+Go to [Releases](https://github.com/tasnimzotder/PowerShell-Lightning/releases) and download from the Assets
 
 Download the source file and extract
 
@@ -37,7 +58,11 @@ or simple run the command `code $PROFILE.CurrentUserAllHosts` or `notepad $PROFI
 
 > - add `Import-Module PowerShell-Lightning` to the end
 
-Run `Get-Module` . You will see `PowerShell-Lightning` there.
+Now Run 
+```PowerShell
+Get-Module
+````
+You will see `PowerShell-Lightning` there.
 
 restart the PowerShell
 
