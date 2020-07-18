@@ -1,4 +1,6 @@
-# Powershell-Lightning ⚡
+# Powershell Lightning ⚡
+
+
 ![PowerShell Gallery Version (including pre-releases)](https://img.shields.io/powershellgallery/v/PowerShell-Lightning?include_prereleases)
 .
 ![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/tasnimzotder/PowerShell-Lightning?include_prereleases)
@@ -66,6 +68,11 @@ You will see `PowerShell-Lightning` there.
 
 restart the PowerShell
 
+For more help write
+```PowerShell
+PSL info
+```
+
 # Functions
 
 | Name          | Alias   | Description                                    |
@@ -74,6 +81,22 @@ restart the PowerShell
 | `touch`       | `touch` | Create new file eg `touch hello.txt`           |
 | `nano`        | `nano`  | edit files eg `nano hello.txt`                 |
 | `rnn`         | `rnn`   | Rename eg `rnn hello.txt` then   `changed.txt` |
+
+
+## Arguments
+
+| Name         |              Description |               Example |
+| ------------ | ------------------------ | --------------------- |
+| `-gitignore` | To add `.gitignore` file | `PSL -gitignore node` |
+
+
+## More
+
+| Name         |              Description |               Example |
+| ------------ | ------------------------ | --------------------- |
+| `info` | To display the docs | `PSL info` |
+| `doctor` | To check language setup status | `PSL doctor` or `PSL doctor makk python` |
+| `create ` | To create a new project | `PSL create hello_js node` |
 
 
 # About PowerShell Profile
@@ -85,14 +108,10 @@ restart the PowerShell
 | Current User, All Host     | `$PROFILE.CurrentUserAllHosts`    |
 | Current User, Current Host | `$PROFILE.CurrentUserCurrentHost` |
 
-
-
-.
-
-| Description                | Path                                                             |
+<!-- | Description                | Path                                                             |
 | -------------------------- | ---------------------------------------------------------------- |
 | All Users, All Hosts       | $PSHOME\Profile.ps1                                              | 
 | All Users, Current Host    | $PSHOME\Microsoft.PowerShell_profile.ps1                         |
 | Current User, All Host     | $Home\[My ]Documents\PowerShell\Profile.ps1                      |
-| Current User, Current Host | $Home\[My ]Documents\PowerShell\Microsoft.PowerShell_profile.ps1 |
+| Current User, Current Host | $Home\[My ]Documents\PowerShell\Microsoft.PowerShell_profile.ps1 | -->
 
