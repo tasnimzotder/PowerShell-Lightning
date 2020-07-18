@@ -12,7 +12,7 @@
     RootModule        = 'PowerShell-Lightning.psm1'
 
     # Version number of this module.
-    ModuleVersion     = '0.1.0'
+    ModuleVersion     = '1.0.0'
 
     # Supported PSEditions
     # CompatiblePSEditions = @()
@@ -30,7 +30,7 @@
     Copyright         = '(c) Tasnim Zotder. All rights reserved.'
 
     # Description of the functionality provided by this module
-    Description = 'PowerShell scripts'
+    Description       = 'PowerShell scripts'
 
     # Minimum version of the PowerShell engine required by this module
     # PowerShellVersion = ''
@@ -72,7 +72,7 @@
 
     # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
     FunctionsToExport = @(
-        'Run_AnyCode', 'touch', 'nano', 'rnn'
+        'PSL', 'Run_AnyCode', 'touch', 'nano', 'rnn'
     )
 
     # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
@@ -114,7 +114,7 @@
             # ReleaseNotes = ''
 
             # Prerelease string of this module
-            Prerelease = 'beta4'
+            # Prerelease = 'beta4'
 
             # Flag to indicate whether the module requires explicit user acceptance for install/update/save
             # RequireLicenseAcceptance = $false

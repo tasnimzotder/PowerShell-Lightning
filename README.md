@@ -1,4 +1,6 @@
-# Powershell-Lightning ⚡
+# Powershell Lightning ⚡
+
+
 ![PowerShell Gallery Version (including pre-releases)](https://img.shields.io/powershellgallery/v/PowerShell-Lightning?include_prereleases)
 .
 ![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/tasnimzotder/PowerShell-Lightning?include_prereleases)
