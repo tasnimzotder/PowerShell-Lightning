@@ -198,9 +198,9 @@ function PSL {
             Write-Host "`tnano`t" -NoNewline -ForegroundColor Yellow
             Write-Host "To edit s text file"
 
-            Write-Host "`ttouch`t" -NoNewline -ForegroundColor Yellow
+            Write-Host "`tmakk`t" -NoNewline -ForegroundColor Yellow
             Write-Host "To run a code | eg " -NoNewline
-            Write-Host "touch hello.cpp" -ForegroundColor Yellow
+            Write-Host "makk hello.cpp" -ForegroundColor Yellow
 
             # Arguments
             Write-Host "`nArguments ->"
@@ -223,6 +223,10 @@ function PSL {
             Write-Host "`tcreate`t" -NoNewline -ForegroundColor Yellow
             Write-Host "To create new project | eg " -NoNewline
             Write-Host "PSL create hello_js node" -ForegroundColor Yellow
+
+            Write-Host "`n"
+            Write-Host "GitHub " -NoNewline
+            Write-Host "https://github.com/tasnimzotder/PowerShell-Lightning"
         }
         elseif ($Info.ToLower() -eq "create") {
             if ($null -ne $Remaining) {
