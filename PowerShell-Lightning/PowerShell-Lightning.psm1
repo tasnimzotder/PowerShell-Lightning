@@ -171,19 +171,21 @@ Function Get-Doctor {
 function PSL {
     param (
         [parameter(Mandatory = $false, Position = 0, ParameterSetName = "Info")]
-        [ValidateSet('info', 'doctor', 'create')]
+        [ValidateSet('info', 'doctor', 'create', 'gitignore', 'gi')]
         [string]$Info,
 
         [parameter(Mandatory = $false, Position = 1, ParameterSetName = "Info", ValueFromRemainingArguments)]
-        [string[]]$Remaining,
+        [string[]]$Remaining
         
-        [Parameter(Mandatory = $false, ParameterSetName = "gitignore")]
-        [string[]]
-        $gitignore
+        # [Parameter(Mandatory = $false, ParameterSetName = "gitignore")]
+        # [string[]]
+        # $gitignore
 
     )
 
-    [string]$gitignoreSource = "https://raw.githubusercontent.com/github/gitignore/master"
+    if ($null -like $Info) {
+        PSL info
+    }
 
     if ($null -ne $Info) {
         if ($Info.ToLower() -eq "info") {
@@ -204,25 +206,25 @@ function PSL {
 
             # Arguments
             Write-Host "`nArguments ->"
-
-            Write-Host "`t-gitignore`t" -NoNewline -ForegroundColor Yellow
-            Write-Host "add .gitignore file | eg " -NoNewline
-            Write-Host "PSL -gitignore node" -ForegroundColor Yellow
-
-            Write-Host "`n"
-
+            
             Write-Host "`tinfo`t" -NoNewline -ForegroundColor Yellow
             Write-Host "display the docs"
-
+            
             Write-Host "`tdoctor`t" -NoNewline -ForegroundColor Yellow
             Write-Host "To check setup status | eg " -NoNewline
             Write-Host "PSL doctor" -NoNewline -ForegroundColor Yellow
             Write-Host " or " -NoNewline
             Write-Host "PSL doctor make py" -ForegroundColor Yellow
-
+            
             Write-Host "`tcreate`t" -NoNewline -ForegroundColor Yellow
             Write-Host "To create new project | eg " -NoNewline
             Write-Host "PSL create hello_js node" -ForegroundColor Yellow
+            
+            Write-Host "`tgi" -NoNewline -ForegroundColor Yellow
+            Write-Host ", " -NoNewline
+            Write-Host "gitignore`t" -NoNewline -ForegroundColor Yellow
+            Write-Host "add .gitignore file | eg " -NoNewline
+            Write-Host "PSL gi node" -ForegroundColor Yellow
 
             Write-Host "`n"
             Write-Host "GitHub " -NoNewline
@@ -240,21 +242,40 @@ function PSL {
         elseif ($Info.ToLower() -eq "doctor") {
             Get-Doctor "$Remaining"
         }
+        elseif ($Info.ToLower() -eq "gitignore" -or $Info.ToLower() -eq "gi") {
+            if ($null -eq $Remaining) {
+                [string]$Remaining = Read-Host "Enter the project type (node, cpp, python ... )"
+            }
+            
+            [string]$gitignoreSource = "https://raw.githubusercontent.com/github/gitignore/master"
+            $gitignoreCap = (Get-Culture).TextInfo.ToTitleCase($Remaining.ToLower())
+
+
+            if ($Remaining.ToUpper() -eq "CPP") {
+                Write-Output $gitignoreCap
+                Start-BitsTransfer -Source "$gitignoreSource/C%2B%2B.gitignore" -Destination ".gitignore"
+            }
+            else {
+                Write-Output $gitignoreCap
+                Start-BitsTransfer -Source "$gitignoreSource/$gitignoreCap.gitignore" -Destination ".gitignore"
+            }
+        }
     }
 
-    if ($null -ne $gitignore) {
-        $gitignoreCap = (Get-Culture).TextInfo.ToTitleCase($gitignore.ToLower())
+    # if ($null -ne $gitignore) {
+    #     $gitignoreCap = (Get-Culture).TextInfo.ToTitleCase($gitignore.ToLower())
 
-        if ($gitignore.ToUpper() -eq "CPP") {
-            Write-Output $gitignoreCap
-            Start-BitsTransfer -Source "$gitignoreSource/C%2B%2B.gitignore" -Destination ".gitignore"
-        }
-        else {
-            Write-Output $gitignoreCap
-            Start-BitsTransfer -Source "$gitignoreSource/$gitignoreCap.gitignore" -Destination ".gitignore"
-        }
-    }
+    #     if ($gitignore.ToUpper() -eq "CPP") {
+    #         Write-Output $gitignoreCap
+    #         Start-BitsTransfer -Source "$gitignoreSource/C%2B%2B.gitignore" -Destination ".gitignore"
+    #     }
+    #     else {
+    #         Write-Output $gitignoreCap
+    #         Start-BitsTransfer -Source "$gitignoreSource/$gitignoreCap.gitignore" -Destination ".gitignore"
+    #     }
+    # }
 
 }
 
 # Export-ModuleMember -Function PSL
+Set-Alias -Name PSL gitignore -Value PSL gi

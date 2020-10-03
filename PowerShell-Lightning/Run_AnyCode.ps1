@@ -1,7 +1,17 @@
 function Run_AnyCode {
     param(
         [Parameter(Mandatory = $true)]
-        [string]$value
+        [string]$value,
+
+        [switch]$s,
+        [switch]$silent,
+
+        [switch]$p,
+        [switch]$progress
+
+        # [Parameter(Mandatory = $false, ParameterSetName = "gitignore")]
+        # [string[]]
+        # $gitignore
     )
 
     if (Test-Path $value -PathType Leaf) {
@@ -46,8 +56,9 @@ function Run_AnyCode {
         return
     }
 
-    # Write-Host "🍦 Output goes here...⤵️`n"
-    Write-Host "⤵"
+    if ( !($s -or $silent)) {
+        Write-Host "⤵"
+    }
 
     $stopwatch_b = New-Object System.Diagnostics.Stopwatch
     $stopwatch_r = New-Object System.Diagnostics.Stopwatch
@@ -55,7 +66,9 @@ function Run_AnyCode {
     $stopwatch_b.Start()
     
     if ($null -ne $build_cmd) {
-        Write-Progress "Building... ⌛"
+        if ($progress -or $p) {
+            Write-Progress "Building... ⌛"
+        }
         Invoke-Expression $build_cmd
     }
     
@@ -63,11 +76,15 @@ function Run_AnyCode {
     $stopwatch_r.Start()
     
     if ($null -ne $run_cmd) {
-        Write-Progress -Activity "Running... ⚡" -Status "Please wait"
+        if ($progress -or $p) {
+            Write-Progress -Activity "Running... ⚡" -Status "Please wait"
+        }
         Invoke-Expression $run_cmd
     }
     elseif (Test-Path "$value.exe" -PathType Leaf) {
-        Write-Progress -Activity "Starting to run... ⚡" -Status "Please wait"
+        if ($progress -or $p) {
+            Write-Progress -Activity "Starting to run... ⚡" -Status "Please wait"
+        }
         Start-Sleep -Milliseconds 100
         Invoke-Expression "& .\$value.exe"
         Remove-Item "$value.exe"
@@ -75,11 +92,14 @@ function Run_AnyCode {
 
     $stopwatch_r.Stop()
 
-    $time_b_diff = $stopwatch_b.ElapsedMilliseconds
-    $time_r_diff = $stopwatch_r.ElapsedMilliseconds
-    
-    Write-Host "`n⌛ Build time $time_b_diff milliseconds"
-    Write-Host "⚡ Run time   $time_r_diff milliseconds`n"
+    if (!($silent -or $s)) {   
+        $time_b_diff = $stopwatch_b.ElapsedMilliseconds
+        $time_r_diff = $stopwatch_r.ElapsedMilliseconds
+        
+        Write-Host "`n⌛ Build time $time_b_diff milliseconds"
+        Write-Host "⚡ Run time   $time_r_diff milliseconds`n"
+    }
+
 }
 
 Set-Alias -Name makk -Value Run_AnyCode
