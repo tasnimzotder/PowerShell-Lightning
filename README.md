@@ -7,7 +7,7 @@
     <a><img alt="GitHub release (latest SemVer including pre-releases)" src="https://img.shields.io/github/v/release/tasnimzotder/powershell-lightning?include_prereleases&logo=github&style=flat-square"></a>
     <a><img alt="GitHub issues" src="https://img.shields.io/github/issues/tasnimzotder/powershell-lightning?style=flat-square"></a>
     <a><img alt="PowerShell Gallery" src="https://img.shields.io/powershellgallery/dt/powershell-lightning?logo=powershell&style=flat-square"></a>
-    <a><img alt="GitHub" src="https://img.shields.io/github/license/tasnimzotder/powershell-lightning?style=flat-square"></a>
+    <a><img alt="GitHub All Releases" src="https://img.shields.io/github/downloads/tasnimzotder/powershell-lightning/total?logo=github&style=flat-square"></a>
 </p>
 
 ## Prerequisites
@@ -38,13 +38,9 @@ Install-Module -Name PowerShell-Lightning
 
 ### Manual (Method 2)
 
-Go to [Releases](https://github.com/tasnimzotder/PowerShell-Lightning/releases) and download from the Assets
+1. Go to [Releases](https://github.com/tasnimzotder/PowerShell-Lightning/releases) and download from the Assets
 
-Download the source file and extract
-
-You can download from the [Releases](https://github.com/tasnimzotder/PowerShell-Lightning/releases)
-
-- To install - run `Setup.ps1` or `Setup.exe`
+2. Download `exe` file and install
 
 ### Optional
 
@@ -71,17 +67,17 @@ PSL info
 
 ## Arguments
 
-| Name      | Description                    | Example                                  |
-| --------- | ------------------------------ | ---------------------------------------- |
-| `info`    | To display the docs            | `PSL info`                               |
-| `doctor`  | To check language setup status | `PSL doctor` or `PSL doctor makk python` |
-| `create` | To create a new project        | `PSL create hello_js node`               |
-| `gi`, `gitignore` | To add `.gitignore` file | `PSL gi node` |
+| Name              | Description                    | Example                                  |
+| ----------------- | ------------------------------ | ---------------------------------------- |
+| `info`            | To display the docs            | `PSL info`                               |
+| `doctor`          | To check language setup status | `PSL doctor` or `PSL doctor makk python` |
+| `create`          | To create a new project        | `PSL create hello_js node`               |
+| `gi`, `gitignore` | To add `.gitignore` file       | `PSL gi node`                            |
 
 ## Functions
 
-| Name          | Alias   | Description                                  |
-| ------------- | ------- | -------------------------------------------- |
+| Name          | Alias   | Description                                    |
+| ------------- | ------- | ---------------------------------------------- |
 | `Run_AnyCode` | `makk`  | To run any code <br> `makk hello.cpp`          |
 | `touch`       | `touch` | Create new file <br> `touch hello.txt`         |
 | `nano`        | `nano`  | edit files <br> `nano hello.txt`               |
@@ -91,13 +87,10 @@ PSL info
 
 ### `Run_AnyCode` or `makk`
 
-| Name         | Description              | Example               |
-| ------------ | ------------------------ | --------------------- |
-| `s`, `silent`|  Run proram silently  | `makk hello.js -s` |
+| Name            | Description          | Example            |
+| --------------- | -------------------- | ------------------ |
+| `s`, `silent`   | Run proram silently  | `makk hello.js -s` |
 | `p`, `progress` | Show progress status | `makk hello.js -p` |
-
-
-
 
 ## About PowerShell Profile
 
