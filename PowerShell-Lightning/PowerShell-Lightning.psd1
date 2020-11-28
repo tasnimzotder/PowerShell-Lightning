@@ -24,7 +24,7 @@
     Author            = 'Tasnim Zotder'
 
     # Company or vendor of this module
-    CompanyName       = 'Unknown'
+    CompanyName       = 'Tasnim Zotder'
 
     # Copyright statement for this module
     Copyright         = '(c) Tasnim Zotder. All rights reserved.'
@@ -99,13 +99,13 @@
         PSData = @{
 
             # Tags applied to this module. These help with module discovery in online galleries.
-            # Tags = @()
+            Tags       = @('powershell', 'powershell-lightning', 'cli', 'gitignore', 'setup')
 
             # A URL to the license for this module.
-            # LicenseUri = ''
+            LicenseUri = 'https://raw.githubusercontent.com/tasnimzotder/PowerShell-Lightning/master/LICENSE'
 
             # A URL to the main website for this project.
-            # ProjectUri = ''
+            ProjectUri = 'https://github.com/tasnimzotder/PowerShell-Lightning'
 
             # A URL to an icon representing this module.
             # IconUri = ''
