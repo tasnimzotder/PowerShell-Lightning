@@ -1,3 +1,12 @@
+# 
+#   Powershell Lightning
+# 
+#   Author: Tasnim Zotder <hello@tasnim.dev> | 2020
+#   Repository: https://github.com/tasnimzotder/PowerShell-Lightning
+#   License: MIT
+# 
+
+
 function InstalledStatusPrint {
     param (
         [parameter(Mandatory = $false, Position = 0, ParameterSetName = "Print")]
@@ -8,8 +17,8 @@ function InstalledStatusPrint {
         [bool]$Status
     )
 
-    $emojiTrue = [char]::ConvertFromUtf32(0x2714)
-    $emojiFalse = [char]::ConvertFromUtf32(0x274C)
+    $emojiTrue = [char]::ConvertFromUtf32(0x2714)   # tick symbol
+    $emojiFalse = [char]::ConvertFromUtf32(0x274C)  # cross symbol
 
     Write-Host "$Name" -NoNewline
     Write-Host "| $Type`t" -NoNewline
@@ -20,6 +29,75 @@ function InstalledStatusPrint {
         Write-Host $emojiFalse -ForegroundColor Red
     }
     
+}
+
+Function Add-Setup {
+    param (
+        [Parameter(Mandatory = $true, Position = 0, ParameterSetName = "Setup")]
+        [string[]]$Setup
+    )
+
+    if ($Setup.ToLower() -eq "python") {
+        $s_pipenv = New-Object System.Management.Automation.Host.ChoiceDescription '&1-Pipenv', 'asdfg'
+        $s_poetry = New-Object System.Management.Automation.Host.ChoiceDescription '&2-Poetry', 'wertyu'
+        
+        $options = [System.Management.Automation.Host.ChoiceDescription[]]($s_pipenv, $s_poetry)
+        $message = 'Select the python project structure - '
+        $result = $Host.UI.PromptForChoice('', $message, $options, 0)
+
+        switch ($result) {
+            0 {
+                $currDir = Get-Location
+                Write-Output "Setting up 'pipenv' in  $currDir"
+                # & `psl gi python`
+                
+                try {
+                    try {
+                        & ` export PIPENV_VENV_IN_PROJECT="enabled"`
+                        & `pipenv install`
+                        & `pipenv shell`
+                    }
+                    catch {
+                        & `pip install pipenv`
+                        & ` export PIPENV_VENV_IN_PROJECT="enabled"`
+                        & `pipenv install`
+                        # & `psl gi python`
+                        & `pipenv shell`
+                    }
+                }
+                catch {
+                    Write-Error "Python 3 is not setup"
+                }
+            }
+            1 {
+                $currDir = Get-Location
+                Write-Output "Setting up 'poetry' in  $currDir"
+                
+                try {
+                    try {
+                        & `poetry init`
+                        Write-Output "[virtualenvs]`nin-project = true" > poetry.toml
+                        & `poetry install`
+                        # & `poetry shell`
+                        psl gi python
+                    }
+                    catch {
+                        (Invoke-WebRequest -Uri https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py -UseBasicParsing).Content | python -
+                        & `poetry init`
+                        Write-Output "[virtualenvs]`nin-project = true" > poetry.toml
+                        & `poetry install`
+                        # & `psl gi python`
+                        # & `poetry shell`
+                        psl gi python
+                    }
+                }
+                catch {
+                    Write-Error "Failed to setup"
+                }
+            }
+            Default {}
+        }
+    }
 }
 
 Function New-Project {
@@ -43,8 +121,8 @@ Function New-Project {
         }
         else {
             mkdir $Name
-            $CurrDir = Get-Location
-            Set-Location $CurrDir\$Name
+            $currDir = Get-Location
+            Set-Location $currDir\$Name
 
             npm init $Argx
 
@@ -73,8 +151,8 @@ Function New-Project {
         }
         else {
             mkdir $Name
-            $CurrDir = Get-Location
-            Set-Location $CurrDir\$Name
+            $currDir = Get-Location
+            Set-Location $currDir\$Name
 
             npm init $Argx
 
@@ -117,28 +195,35 @@ Function New-Project {
             switch ($result) {
                 0 { 
                     mkdir $Name
-                    $CurrDir = Get-Location
-                    Set-Location $CurrDir\$Name
+                    $currDir = Get-Location
+                    Set-Location $currDir\$Name
 
                     Write-Output "## $Name" > README.md
-                    New-Item "$Name.py", requirements.txt, setup.py, tests.py
+                    New-Item "$Name.py"
+
+                    Write-Output "Setting up pipenv"
+
+                    & `pip install pipenv`
+                    & ` export PIPENV_VENV_IN_PROJECT="enabled"`
+                    & `.\venv\Scripts\activate`
+
                     psl gi python
                 }
                 1 { 
                     mkdir $Name
-                    $CurrDir = Get-Location
-                    Set-Location $CurrDir\$Name
-                    # $CurrDir_r = Get-Location
+                    $currDir = Get-Location
+                    Set-Location $currDir\$Name
+                    # $currDir_r = Get-Location
 
                     mkdir $Name, tests
-                    # Set-Location $CurrDir_r\$Name
+                    # Set-Location $currDir_r\$Name
 
                     New-Item requirements.txt, setup.py, $name\__init__.py, "$name`\$Name.py", $name\helpers.py, "tests\$Name`_tests.py", "tests\helpers_tests.py"
 
-                    # Set-Location $CurrDir_r/tests
+                    # Set-Location $currDir_r/tests
                     # New-Item "$Name`_tests.py", helpers_tests.py
                     
-                    # Set-Location $CurrDir_r
+                    # Set-Location $currDir_r
                     
                     
                     Write-Output "## $Name" > README.md
@@ -149,19 +234,52 @@ Function New-Project {
         }
     }
     elseif ($Type.ToLower() -eq "web") {
-        $w_html = New-Object System.Management.Automation.Host.ChoiceDescription '&HTML', 'Simple HTML project'
         $w_react = New-Object System.Management.Automation.Host.ChoiceDescription '&REACT', 'React front end project'
+        $w_next = New-Object System.Management.Automation.Host.ChoiceDescription '&NEXT', 'Next.js front end project'
+        $w_html = New-Object System.Management.Automation.Host.ChoiceDescription '&HTML', 'Simple HTML project'
         
-        $options = [System.Management.Automation.Host.ChoiceDescription[]]($w_html, $w_react)
+        $options = [System.Management.Automation.Host.ChoiceDescription[]]($w_react, $w_next, $w_html)
         $message = 'Select the web project structure - '
         $result = $Host.UI.PromptForChoice('', $message, $options, 0)
 
         switch ($result) {
             0 {
+                $currDir = Get-Location
+
+                try {
+                    & `yarn create react-app $Name`
+                    Set-Location $currDir\$Name
+                }
+                catch {
+                    try {
+                        & ` npx create-react-app $Name`
+                        Set-Location $currDir\$Name
+                    }
+                    catch {
+                        Write-Error "Please install npx or yarn on your system"
+                    }
+                }
+            } 1 {
+                $currDir = Get-Location
+
+                try {
+                    & `yarn create next-app $Name`
+                    Set-Location $currDir\$Name
+                }
+                catch {
+                    try {
+                        & ` npx create-next-app $Name`
+                        Set-Location $currDir\$Name
+                    }
+                    catch {
+                        Write-Error "Please install npx or yarn on your system"
+                    }
+                }
+            } 2 {
                 mkdir $Name
-                $CurrDir = Get-Location
-                Set-Location $CurrDir\$Name
-                # $CurrDir_r = Get-Location
+                $currDir = Get-Location
+                Set-Location $currDir\$Name
+                # $currDir_r = Get-Location
 
                 mkdir assets, scripts, styles
                 mkdir assets\images, assets\fonts
@@ -171,56 +289,9 @@ Function New-Project {
                 $favicon_link = "https://storage.googleapis.com/tasnim-dev.appspot.com/psl/favicon.ico"
                 Write-Output $html_text > index.html 
                 Start-BitsTransfer -Source $favicon_link -Destination assets/favicon.ico
-            }1 {
-
             }
         }
     }
-
-    # mkdir $Name
-    # $currDir = Get-Location
-    # Set-Location $currDir\$Name
-
-    # if ($Type.ToLower() -eq 'py' -or $Type.ToLower() -eq 'python') {
-    #     New-Item Requirements.txt
-    #     New-Item main.py
-    #     PSL -gitignore python
-        
-    #     $isCode = Read-Host "Wanna open with VS Code [y/n]"
-    #     if ($isCode.ToLower() -eq 'y') {
-    #         code .
-    #     }
-    # }
-    # elseif ($Type.ToLower() -eq 'js' -or $Type.ToLower() -eq 'node') {
-    #     if ($Argx -eq "-y") {
-    #         npm init $Argx
-    #         New-Item index.js
-    #     }
-    #     else {
-    #         npm init
-    #     }
-    #     PSL -gitignore node
-        
-    #     $isCode = Read-Host "Wanna open with VS Code [y/n]"
-    #     if ($isCode.ToLower() -eq 'y') {
-    #         code .
-    #     }
-    # }
-    # elseif ($Type.ToLower() -eq 'cpp' -or $Type.ToLower() -eq 'c++') {
-    #     if ($Argx -eq "-y") {
-    #         $cppString = "#include <iostream>`nusing namespace std;`n`nint main() {`n`tcout << `"Hello World!`" << endl;`n`treturn 0;`n}"
-    #         & { Write-Output $cppString > main.cpp }
-    #     }
-    #     else {
-    #         New-Item main.cpp
-    #     }
-    #     PSL -gitignore cpp
-
-    #     $isCode = Read-Host "Wanna open with VS Code [y/n]"
-    #     if ($isCode.ToLower() -eq 'y') {
-    #         code .
-    #     }
-    # }
 }
 
 Function Get-Doctor {
@@ -258,13 +329,13 @@ Function Get-Doctor {
         }
         else {
             if ($Language.ToLower() -eq 'py' -or $Language.ToLower() -eq 'python') {
-                [bool]$isInstalled = $null -ne (Get-ItemProperty HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\* | Select-Object DisplayName, DisplayVersion, Publisher, InstallDate | Where-Object { $_.DisplayName -like "*Python*" })
-                if (-Not $isInstalled) {
-                    InstalledStatusPrint "Python`t`t" installed $false
-                }
-                else {
-                    InstalledStatusPrint "Python`t`t" installed $true
-                }
+                # [bool]$isInstalled = $null -ne (Get-ItemProperty HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\* | Select-Object DisplayName, DisplayVersion, Publisher, InstallDate | Where-Object { $_.DisplayName -like "*Python*" })
+                # if (-Not $isInstalled) {
+                #     InstalledStatusPrint "Python`t`t" installed $false
+                # }
+                # else {
+                #     InstalledStatusPrint "Python`t`t" installed $true
+                # }
                         
                 $version = & { python -V } 2>$1
                 if ($null -ne $version) {
@@ -276,13 +347,13 @@ Function Get-Doctor {
                 }
             }
             elseif ($Language.ToLower() -eq 'js' -or $Language.ToLower() -eq 'javascript' -or $Language.ToLower() -eq 'node') {
-                [bool]$isInstalled = $null -ne (Get-ItemProperty HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\* | Select-Object DisplayName, DisplayVersion, Publisher, InstallDate | Where-Object { $_.DisplayName -eq "Node.js" })
-                if (-Not $isInstalled) {
-                    InstalledStatusPrint "Node`t`t" installed $false
-                }
-                else {
-                    InstalledStatusPrint "Node`t`t" installed $true
-                }
+                # [bool]$isInstalled = $null -ne (Get-ItemProperty HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\* | Select-Object DisplayName, DisplayVersion, Publisher, InstallDate | Where-Object { $_.DisplayName -eq "Node.js" })
+                # if (-Not $isInstalled) {
+                #     InstalledStatusPrint "Node`t`t" installed $false
+                # }
+                # else {
+                #     InstalledStatusPrint "Node`t`t" installed $true
+                # }
                         
                 $version = & { node -v } 2>$1
                 if ($null -ne $version) {
@@ -318,7 +389,7 @@ Function Get-Doctor {
 function PSL {
     param (
         [parameter(Mandatory = $false, Position = 0, ParameterSetName = "Info")]
-        [ValidateSet('info', 'doctor', 'create', 'c', 'gitignore', 'gi')]
+        [ValidateSet('info', 'doctor', 'create', 'c', 'setup', 's', 'gitignore', 'gi')]
         [string]$Info,
 
         [parameter(Mandatory = $false, Position = 1, ParameterSetName = "Info", ValueFromRemainingArguments)]
@@ -367,6 +438,10 @@ function PSL {
             Write-Host "To create new project | eg " -NoNewline
             Write-Host "PSL create hello_js node" -ForegroundColor Yellow
             
+            Write-Host "`tsetup`t" -NoNewline -ForegroundColor Yellow
+            Write-Host "To Setup project env / config | eg " -NoNewline
+            Write-Host "PSL setup" -ForegroundColor Yellow
+            
             Write-Host "`tgi" -NoNewline -ForegroundColor Yellow
             Write-Host ", " -NoNewline
             Write-Host "gitignore`t" -NoNewline -ForegroundColor Yellow
@@ -374,8 +449,8 @@ function PSL {
             Write-Host "PSL gi node" -ForegroundColor Yellow
 
             Write-Host "`n"
-            Write-Host "GitHub " -NoNewline
-            Write-Host "https://github.com/tasnimzotder/PowerShell-Lightning"
+            Write-Host "GitHub -> " -NoNewline
+            Write-Host "https://github.com/tasnimzotder/PowerShell-Lightning" -BackgroundColor Blue -ForegroundColor White
         }
         elseif ($Info.ToLower() -eq "create" -or $Info.ToLower() -eq "c") {
             if ($null -ne $Remaining) {
@@ -404,6 +479,19 @@ function PSL {
                 }
             }
         }
+        elseif ($Info.ToLower() -eq "setup" -or $Info.ToLower() -eq "s") {
+            $s_python = New-Object System.Management.Automation.Host.ChoiceDescription '&Python', 'Python Configurations'
+
+            $options = [System.Management.Automation.Host.ChoiceDescription[]]($s_python)
+            $message = "`nSelect the configuration type - "
+            $result = $Host.UI.PromptForChoice('', $message, $options, 0)
+
+            switch ($result) {
+                0 {
+                    Add-Setup python
+                }
+            }
+        }
         elseif ($Info.ToLower() -eq "doctor") {
             Get-Doctor "$Remaining"
         }
@@ -426,20 +514,6 @@ function PSL {
             }
         }
     }
-
-    # if ($null -ne $gitignore) {
-    #     $gitignoreCap = (Get-Culture).TextInfo.ToTitleCase($gitignore.ToLower())
-
-    #     if ($gitignore.ToUpper() -eq "CPP") {
-    #         Write-Output $gitignoreCap
-    #         Start-BitsTransfer -Source "$gitignoreSource/C%2B%2B.gitignore" -Destination ".gitignore"
-    #     }
-    #     else {
-    #         Write-Output $gitignoreCap
-    #         Start-BitsTransfer -Source "$gitignoreSource/$gitignoreCap.gitignore" -Destination ".gitignore"
-    #     }
-    # }
-
 }
 
 # Export-ModuleMember -Function PSL

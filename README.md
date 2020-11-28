@@ -10,7 +10,7 @@
     <a><img alt="GitHub All Releases" src="https://img.shields.io/github/downloads/tasnimzotder/powershell-lightning/total?logo=github&style=flat-square"></a>
 </p>
 
-## Prerequisites
+## ⚓ Prerequisites
 
 ### Check for the execution policy
 
@@ -28,7 +28,7 @@ Windows Terminal can be acquired from the Microsoft Store, the [Windows Terminal
 
 You need to have the new PowerShell, can be downloaded from [here](https://github.com/PowerShell/PowerShell/releases/tag/v7.0.2)
 
-## Installation
+## 💻 Installation
 
 ### One Line Command (Method 1)
 
@@ -40,7 +40,7 @@ Install-Module -Name PowerShell-Lightning
 
 1. Go to [Releases](https://github.com/tasnimzotder/PowerShell-Lightning/releases) and download from the Assets
 
-2. Download `exe` file and install
+2. Download the `exe` file and install
 
 ### Optional
 
@@ -65,16 +65,17 @@ For more help write
 PSL info
 ```
 
-## Arguments
+## 🔗 Arguments
 
 | Name              | Description                    | Example                                  |
 | ----------------- | ------------------------------ | ---------------------------------------- |
-| `info`            | To display the docs            | `PSL info`                               |
-| `doctor`          | To check language setup status | `PSL doctor` or `PSL doctor makk python` |
-| `create`          | To create a new project        | `PSL create hello_js node`               |
-| `gi`, `gitignore` | To add `.gitignore` file       | `PSL gi node`                            |
+| `info`            | To display the docs            | `psl info`                               |
+| `doctor`          | To check language setup status | `psl doctor` or `PSL doctor makk python` |
+| `c`, `create`     | To create a new project        | `psl create hello_js node`               |
+| `s`, `setup`      | Setup project env / config     | `psl setup`                              |
+| `gi`, `gitignore` | To add `.gitignore` file       | `psl gi node`                            |
 
-## Functions
+## 🛠 Functions
 
 | Name          | Alias   | Description                                    |
 | ------------- | ------- | ---------------------------------------------- |
@@ -83,7 +84,7 @@ PSL info
 | `nano`        | `nano`  | edit files <br> `nano hello.txt`               |
 | `rnn`         | `rnn`   | Rename <br> `rnn hello.txt` then `changed.txt` |
 
-## Flags
+## 🚩 Flags
 
 ### `Run_AnyCode` or `makk`
 
@@ -92,7 +93,7 @@ PSL info
 | `s`, `silent`   | Run proram silently  | `makk hello.js -s` |
 | `p`, `progress` | Show progress status | `makk hello.js -p` |
 
-## About PowerShell Profile
+## 🆎 About PowerShell Profile
 
 | Description                | Name                              |
 | -------------------------- | --------------------------------- |
@@ -100,10 +101,3 @@ PSL info
 | All Users, Current Host    | `$PROFILE.AllUsersCurrentHost`    |
 | Current User, All Host     | `$PROFILE.CurrentUserAllHosts`    |
 | Current User, Current Host | `$PROFILE.CurrentUserCurrentHost` |
-
-<!-- | Description                | Path                                                             |
-| -------------------------- | ---------------------------------------------------------------- |
-| All Users, All Hosts       | $PSHOME\Profile.ps1                                              |
-| All Users, Current Host    | $PSHOME\Microsoft.PowerShell_profile.ps1                         |
-| Current User, All Host     | $Home\[My ]Documents\PowerShell\Profile.ps1                      |
-| Current User, Current Host | $Home\[My ]Documents\PowerShell\Microsoft.PowerShell_profile.ps1 | -->
