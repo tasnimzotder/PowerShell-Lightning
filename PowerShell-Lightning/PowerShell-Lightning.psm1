@@ -46,6 +46,7 @@ Function Add-Setup {
         $result = $Host.UI.PromptForChoice('', $message, $options, 0)
 
         switch ($result) {
+            # FIXME: #10 #11 pipenv is not working
             0 {
                 $currDir = Get-Location
                 Write-Output "Setting up 'pipenv' in  $currDir"
@@ -56,7 +57,6 @@ Function Add-Setup {
                         & `pipenv install`
 
                         psl gi python
-
                         Write-Host "✔️ Configuration added successfully"
                     }
                     catch {
@@ -439,7 +439,7 @@ function PSL {
 
             Write-Host "`n"
             Write-Host "GitHub -> " -NoNewline
-            Write-Host "https://github.com/tasnimzotder/PowerShell-Lightning" -BackgroundColor Blue -ForegroundColor White
+            Write-Host "https://github.com/tasnimzotder/PowerShell-Lightning"  -ForegroundColor Blue
         }
         elseif ($Info.ToLower() -eq "create" -or $Info.ToLower() -eq "c") {
             if ($null -ne $Remaining) {
@@ -516,6 +516,7 @@ function PSL {
                     Start-BitsTransfer -Source "$gitignoreSource/$gitignoreCap.gitignore" -Destination ".gitignore"
                     Write-Output "✔️ .gitignore added for $gitignoreCap project"
                 }
+                # FIXME: #12 `psl gi` for UNKNOWN VALUE is not working properly on slower network
                 catch {
                     Write-Error "🚫 gitignore not found for the given name"
                 }
