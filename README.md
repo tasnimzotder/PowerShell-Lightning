@@ -69,20 +69,20 @@ PSL info
 
 | Name              | Description                    | Example                                  |
 | ----------------- | ------------------------------ | ---------------------------------------- |
-| `info`            | To display the docs            | `psl info`                               |
-| `doctor`          | To check language setup status | `psl doctor` or `PSL doctor makk python` |
-| `c`, `create`     | To create a new project        | `psl create hello_js node`               |
+| `info`            | Display the docs            | `psl info`                               |
+| `doctor`          | Check language setup status | `psl doctor` |
+| `c`, `create`     | Create a new project        | `psl create hello_js node`               |
 | `s`, `setup`      | Setup project env / config     | `psl setup`                              |
-| `gi`, `gitignore` | To add `.gitignore` file       | `psl gi node`                            |
+| `gi`, `gitignore` | Add `.gitignore` file       | `psl gi node`                            |
 
 ## 🛠 Functions
 
 | Name          | Alias   | Description                                    |
 | ------------- | ------- | ---------------------------------------------- |
-| `Run_AnyCode` | `makk`  | To run any code <br> `makk hello.cpp`          |
+| `Run_AnyCode` | `makk`  | Run code <br> `makk hello.cpp`          |
 | `touch`       | `touch` | Create new file <br> `touch hello.txt`         |
-| `nano`        | `nano`  | edit files <br> `nano hello.txt`               |
-| `rnn`         | `rnn`   | Rename <br> `rnn hello.txt` then `changed.txt` |
+| `nano`        | `nano`  | Edit file <br> `nano hello.txt`               |
+| `rnn`         | `rnn`   | Rename file <br> `rnn hello.txt` then `changed.txt` |
 
 ## 🚩 Flags
 
