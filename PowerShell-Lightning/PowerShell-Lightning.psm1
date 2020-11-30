@@ -492,6 +492,25 @@ function PSL {
             [string]$gitignoreSource = "https://raw.githubusercontent.com/github/gitignore/master"
             $gitignoreCap = (Get-Culture).TextInfo.ToTitleCase($Remaining.ToLower())
 
+            [System.Collections.ArrayList]$gi_names = @('Actionscript', 'Ada', 'Agda', 'Android',
+                'AppceleratorTitanium', 'AppEngine', 'ArchLinuxPackages', 'Autotools', 'C++', 'C',
+                'CakePHP', 'CFWheels', 'ChefCookbook', 'Clojure', 'CMake', 'CodeIgniter',
+                'CommonLisp', 'Composer', 'Concrete5', 'Coq', 'CraftCMS', 'CUDA', 'D', 'Dart',
+                'Delphi', 'DM', 'Drupal', 'Eagle', 'Elisp', 'Elixir', 'Elm', 'EPiServer', 'Erlang',
+                'ExpressionEngine', 'ExtJs', 'Fancy', 'Finale', 'ForceDotCom', 'Fortran', 'FuelPHP',
+                'Gcov', 'GitBook', 'Go', 'Godot', 'Gradle', 'Grails', 'GWT', 'Haskell', 'Idris',
+                'IGORPro', 'Java', 'JBoss', 'Jekyll', 'JENKINS_HOME', 'Joomla', 'Julia', 'KiCad',
+                'Kohana', 'Kotlin', 'LabVIEW', 'Laravel', 'Leiningen', 'LemonStand', 'Lilypond',
+                'Lithium', 'Lua', 'Magento', 'Maven', 'Mercury', 'MetaProgrammingSystem', 'Nanoc',
+                'Nim', 'Node', 'Objective-C', 'OCaml', 'Opa', 'OpenCart', 'OracleForms', 'Packer',
+                'Perl', 'Phalcon', 'PlayFramework', 'Plone', 'Prestashop', 'Processing', 'PureScript',
+                'Python', 'Qooxdoo', 'Qt', 'R', 'Rails', 'Raku', 'RhodesRhomobile', 'ROS', 'Ruby',
+                'Rust', 'Sass', 'Scala', 'Scheme', 'SCons', 'Scrivener', 'Sdcc', 'SeamGen', 'SketchUp',
+                'Smalltalk', 'Stella', 'SugarCRM', 'Swift', 'Symfony', 'SymphonyCMS', 'Terraform',
+                'TeX', 'Textpattern', 'TurboGears2', 'Typo3', 'Umbraco', 'Unity', 'UnrealEngine',
+                'VisualStudio', 'VVVV', 'Waf', 'WordPress', 'Xojo', 'Yeoman', 'Yii', 'ZendFramework',
+                'Zephir')
+
 
             if ($Remaining.ToLower() -in @("cpp", "c++")) {
                 try {                    
@@ -511,15 +530,19 @@ function PSL {
                     Write-Error "❌ Unable to fetch"
                 }
             }
-            else {
+            elseif ($Remaining.ToLower() -in $gi_names) {
                 try {                    
                     Start-BitsTransfer -Source "$gitignoreSource/$gitignoreCap.gitignore" -Destination ".gitignore"
                     Write-Output "✔️ .gitignore added for $gitignoreCap project"
                 }
                 # FIXME: #12 `psl gi` for UNKNOWN VALUE is not working properly on slower network
                 catch {
-                    Write-Error "🚫 gitignore not found for the given name"
+                    Write-Error "❌ Unable to fetch"
                 }
+            }
+            else {
+                Write-Error "🚫 gitignore not found for the given name"
+                
             }
         }
     }
